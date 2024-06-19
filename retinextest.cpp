@@ -3,12 +3,17 @@
 
 #include "lum_retinex.h"
 #include <opencv2/opencv.hpp>
+#include <opencv2/imgcodecs/legacy/constants_c.h>  // imports CV_LOAD_IMAGE_ANYDEPTH & CV_LOAD_IMAGE_COLOR
 
 const float threshold = 0.13;
 
-int main(int argc, char* argv[])
+#if defined(BUILD_MONOLITHIC)
+#define main    retinex_test_main
+#endif
+
+int main(int argc, const char** argv)
 {
-	cv::Mat input = cv::imread("img/input.ppm", CV_LOAD_IMAGE_ANYDEPTH |CV_LOAD_IMAGE_COLOR);
+	cv::Mat input = cv::imread((argc > 1 ? argv[1] : "img/input.ppm"), CV_LOAD_IMAGE_ANYDEPTH | CV_LOAD_IMAGE_COLOR);
 	input.convertTo(input, CV_32FC3, 1.0 / USHRT_MAX);
 
 	int w = input.cols;
