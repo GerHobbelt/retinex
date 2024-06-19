@@ -242,7 +242,7 @@ namespace lum {
 		A.setFromTriplets(entries.begin(), entries.end());
 		m_At = A.transpose();
 		{
-			printf("factorize %d-by-%d matrix\n", A.cols(), A.cols());
+			printf("factorize %zu-by-%zu matrix\n", (size_t)A.cols(), (size_t)A.cols());
 			double decompose_start = get_s();
 			m_solver.compute(m_At * A);
 			double decompose_end = get_s();
